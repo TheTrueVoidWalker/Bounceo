@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Player/Player1.png" type="Texture" id=2]
-[ext_resource path="res://Player/Player2.png" type="Texture" id=3]
+[ext_resource path="res://Player/Standard1.png" type="Texture" id=2]
+[ext_resource path="res://Player/Standard2.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 15.0
@@ -41,9 +41,4 @@ playing = true
 [node name="DamageTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-
-[node name="EnemyHitTimer" type="Timer" parent="."]
-wait_time = 0.05
-one_shot = true
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
-[connection signal="timeout" from="EnemyHitTimer" to="." method="_on_EnemyHitTimer_timeout"]

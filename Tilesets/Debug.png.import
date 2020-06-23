@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FlyingEnemy1.png-3d5841efdff530ee8fd80bef4e07cc1c.stex"
+path="res://.import/Debug.png-095568f87ce72e008dd9eb1eb1e128e0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemies/FlyingEnemy1.png"
-dest_files=[ "res://.import/FlyingEnemy1.png-3d5841efdff530ee8fd80bef4e07cc1c.stex" ]
+source_file="res://Tilesets/Debug.png"
+dest_files=[ "res://.import/Debug.png-095568f87ce72e008dd9eb1eb1e128e0.stex" ]
 
 [params]
 

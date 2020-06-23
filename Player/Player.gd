@@ -5,12 +5,12 @@ export (int) var jump_speed = 400
 export (float) var acceleration = 0.25
 export (float) var deacceleration = 0.05
 export (int) var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+export (Vector2) var vertical = Vector2(0,-1)
 
-var pPosition := position
 var velocity := Vector2()
-var pVelocity := velocity
-var bounceLimited := 0.0
+var collision : KinematicCollision2D
 
+var bounceLimited := 0.0
 var FLAG_DAMAGE_TIMEOUT := false
 
 func _ready():
@@ -37,46 +37,34 @@ func collided_with_enemy(collision):
 		hurt()
 	else:
 		collision.collider.hurt()
-	#Bounce player away from enemy
-	velocity = pVelocity
-	position = pPosition
-	velocity = (2*velocity).bounce(collision.normal)
-	bounceLimited = 0.1
-	#Prevent enemy collisions for a short while to prevent blockage/wierd behavior
-	$EnemyHitTimer.start()
 	
 
 func _on_DamageTimer_timeout():
-	FLAG_DAMAGE_TIMEOUT = true
+	if collision and "Enemy" in collision.collider.name:
+		hurt()
+	else:
+		set_collision_mask_bit(2, true)
 	$Sprite.play("default")
-
-func _on_EnemyHitTimer_timeout():
-	pass
 
 func _physics_process(delta):
 	#Handle flags
 	bounceLimited -= delta
 	bounceLimited = max(bounceLimited, 0)
-	if FLAG_DAMAGE_TIMEOUT:
-		set_collision_mask_bit(2, true)
-		FLAG_DAMAGE_TIMEOUT = false
 	#Handle motion
 	get_input_acceleration()
-	if is_on_floor():
-		velocity.y = -jump_speed
-	if is_on_wall():
-		velocity.x = -pVelocity.x
-		bounceLimited = 0.1
-	if is_on_ceiling():
-		velocity.y = -pVelocity.y
-	velocity.y += gravity * delta
+	velocity.y += gravity*delta
 	#Handle collisions
-	for i in range(get_slide_count()):
-		if "Enemy" in get_slide_collision(i).collider.name:
-			collided_with_enemy(get_slide_collision(i))
+	if collision:
+		velocity = velocity.bounce(collision.normal)
+		if abs(collision.normal.angle_to(vertical)) < PI / 6:
+			#Bounced off of floor
+			velocity.y = -jump_speed
+		elif not abs(collision.normal.angle_to(vertical.rotated(PI))) < PI / 6:
+			#Bounced off of wall
+			bounceLimited = 0.1
+		if "Enemy" in collision.collider.name:
+			collided_with_enemy(collision)
 	#Move
 	velocity.x = clamp(velocity.x, -max_run_speed, max_run_speed)
 	velocity.y = clamp(velocity.y, -jump_speed, jump_speed)
-	pPosition = position
-	pVelocity = velocity
-	velocity = move_and_slide(velocity, Vector2(0, -1))
+	collision = move_and_collide(velocity*delta)
