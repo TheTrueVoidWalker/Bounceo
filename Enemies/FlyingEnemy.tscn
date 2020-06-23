@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Enemies/FlyingEnemy.gd" type="Script" id=1]
+[ext_resource path="res://Enemies/FlyingEnemy1.png" type="Texture" id=2]
+[ext_resource path="res://Enemies/FlyingEnemy2.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 13.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 3 ), null, null, null, null ],
+"loop": true,
+"name": "Hurt",
+"speed": 20.0
+} ]
+
+[node name="FlyingEnemy" type="KinematicBody2D"]
+position = Vector2( 274.222, 241.26 )
+z_index = 2
+collision_layer = 4
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 2, 0 )
+frames = SubResource( 2 )
+playing = true
+
+[node name="HurtByPlayerTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="HurtByPlayerTimer" to="." method="_on_HurtByPlayerTimer_timeout"]

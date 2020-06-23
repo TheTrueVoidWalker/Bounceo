@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Player/Player1.png" type="Texture" id=2]
+[ext_resource path="res://Player/Player2.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 2 ), null, ExtResource( 3 ), null ],
+"loop": true,
+"name": "Hurt",
+"speed": 8.0
+} ]
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 161.319, 111.848 )
+z_index = 3
+collision_layer = 2
+collision_mask = 6
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+frame = 1
+playing = true
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="EnemyHitTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
+[connection signal="timeout" from="EnemyHitTimer" to="." method="_on_EnemyHitTimer_timeout"]

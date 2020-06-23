@@ -1,0 +1,4 @@
+6/23: Continued work on collision code. Fixed bugged enemy to player collision. Added hitbox forgiveness. Added enemy damge code framework and animation. Fixed bugs in code.
+6/22: Cleaned movement code. Added lerped acceleration and improved horizontal bounce. Added basic flying enemy and implemented enemy-to-enemy collision. Started player-to-enemy co‭llision and created hurt animation.
+6/21: improved player movement with acceleration. Added basic bouncy behavoir.
+6/20: Started project. Added basic player scene and dirt tile.
