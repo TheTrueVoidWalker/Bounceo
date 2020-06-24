@@ -15,6 +15,13 @@ var FLAG_DAMAGE_TIMEOUT := false
 
 func _ready():
 	$Sprite.play("default")
+	#Set up camera
+	var used_rect = get_parent().get_node("Map").get_used_rect()
+	var cell_size = get_parent().get_node("Map").cell_size
+	$Camera.limit_left = used_rect.position.x*cell_size.x
+	$Camera.limit_right = used_rect.end.x*cell_size.x
+	$Camera.limit_top = used_rect.position.y*cell_size.x
+	$Camera.limit_bottom = used_rect.end.y*cell_size.x
 
 func get_input_acceleration():
 	var right = Input.is_action_pressed('ui_right')

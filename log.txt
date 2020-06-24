@@ -1,6 +1,28 @@
-6/24: Recoded player to be more efficient. Refactored enemy code to EnemyBase script.
+6/24
+Pushed Version 0.0.3
+Smoothed camera movement.
+Implemented support for multiple screen sizes.
+Added dynamic camera limits.
+Implemented basic camera.
+Implemented basic enemy hurt and death code.
+Pushed Version 0.0.2
+Refactored enemy code to EnemyBase script.
+Recoded player to be more efficient.
 Pushed Version 0.0.1
-6/23: Continued work on collision code. Fixed bugged enemy to player collision. Added hitbox forgiveness. Added enemy damge code framework and animation. Fixed bugs in code.
-6/22: Cleaned movement code. Added lerped acceleration and improved horizontal bounce. Added basic flying enemy and implemented enemy-to-enemy collision. Started player-to-enemy co‭llision and created hurt animation.
-6/21: improved player movement with acceleration. Added basic bouncy behavoir.
-6/20: Started project. Added basic player scene and dirt tile.
+6/23
+Fixed bugs in code.
+Added enemy damge code framework and animation.
+Added hitbox forgiveness and removed enemy-to-enemy collision.
+Fixed bugged enemy to player collision.
+Continued work on collision code.
+6/22
+Started player-to-enemy co‭llision and created hurt animation.
+Added basic flying enemy and implemented enemy-to-enemy collision. 
+Added lerped acceleration and improved horizontal bounce.
+Cleaned movement code.  
+6/21
+Added basic bouncy behavoir.
+Improved player movement with acceleration. 
+6/20
+Added basic player scene and dirt tile.
+Started project. 
