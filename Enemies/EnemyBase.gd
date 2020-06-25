@@ -3,6 +3,7 @@ extends KinematicBody2D
 var max_move_speed : int
 var max_jump_speed : int
 var health : int
+var damageable := false
 
 var velocity := Vector2()
 var pPosition := position
@@ -19,6 +20,9 @@ func hurt():
 func dead():
 	queue_free()
 	
+func move():
+	pass
+	
 func collide_with_player():
 	pass
 	
@@ -26,6 +30,7 @@ func collide_with_wall():
 	pass
 
 func _physics_process(delta):
+	move()
 	if collision:
 		if "Player" in collision.collider.name:
 			collide_with_player()

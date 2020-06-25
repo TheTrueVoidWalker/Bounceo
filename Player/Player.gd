@@ -40,11 +40,19 @@ func hurt():
 
 func collided_with_enemy(collision):
 	#Determine if player damaged or enemy defeated
-	if velocity.y >= 0 or velocity.length() < 0.1*gravity or position.y > collision.collider.position.y:
+	if velocity.y >= 0 or not abs(velocity.angle_to(global_position-collision.position)) < PI/4:
 		hurt()
 	else:
 		collision.collider.hurt()
-	
+		
+func _on_DamageBox_body_entered(body):
+	if "Enemy" in body.name:
+		body.damageable = true
+
+
+func _on_DamageBox_body_exited(body):
+	if "Enemy" in body.name:
+		body.damageable = false
 
 func _on_DamageTimer_timeout():
 	if collision and "Enemy" in collision.collider.name:

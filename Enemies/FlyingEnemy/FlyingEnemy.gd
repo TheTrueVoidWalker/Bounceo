@@ -12,7 +12,7 @@ func _ready():
 		velocity.x = -velocity.x
 
 func hurt():
-	.hurt()
+	#.hurt()
 	set_collision_layer_bit(2, false)
 	$Sprite.play("Hurt")
 	$HurtByPlayerTimer.start()
