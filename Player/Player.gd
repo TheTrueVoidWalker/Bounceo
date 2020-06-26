@@ -44,15 +44,6 @@ func collided_with_enemy(collision):
 		hurt()
 	else:
 		collision.collider.hurt()
-		
-func _on_DamageBox_body_entered(body):
-	if "Enemy" in body.name:
-		body.damageable = true
-
-
-func _on_DamageBox_body_exited(body):
-	if "Enemy" in body.name:
-		body.damageable = false
 
 func _on_DamageTimer_timeout():
 	if collision and "Enemy" in collision.collider.name:

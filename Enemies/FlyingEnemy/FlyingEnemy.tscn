@@ -22,7 +22,7 @@ animations = [ {
 
 [node name="FlyingEnemy" type="KinematicBody2D"]
 position = Vector2( 274.222, 241.26 )
-scale = Vector2( 1.25, 1.25 )
+scale = Vector2( 1.5, 1.5 )
 z_index = 2
 collision_layer = 4
 script = ExtResource( 1 )
@@ -31,12 +31,10 @@ __meta__ = {
 }
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-scale = Vector2( 1, 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 2, 0 )
-scale = Vector2( 1, 1 )
 frames = SubResource( 2 )
 frame = 1
 playing = true

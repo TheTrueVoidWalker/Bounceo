@@ -3,7 +3,6 @@ extends KinematicBody2D
 var max_move_speed : int
 var max_jump_speed : int
 var health : int
-var damageable := false
 
 var velocity := Vector2()
 var pPosition := position
