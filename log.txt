@@ -1,3 +1,8 @@
+6/25
+Pushed Version 0.0.3 beta 2
+Buffed enemy size.
+Pushed Version 0.0.3 beta 1
+Added dynamic collision.
 6/24
 Pushed Version 0.0.3
 Smoothed camera movement.
