@@ -11,7 +11,7 @@ var velocity := Vector2()
 var collision : KinematicCollision2D
 
 var bounceLimited := 0.0
-var FLAG_DAMAGE_TIMEOUT := false
+
 
 func _ready():
 	$Sprite.play("default")
@@ -71,6 +71,7 @@ func _physics_process(delta):
 		if "Enemy" in collision.collider.name:
 			collided_with_enemy(collision)
 	#Move
-	velocity.x = clamp(velocity.x, -max_run_speed, max_run_speed)
+	velocity.x = clamp(velocity.x, -2*max_run_speed, 2*max_run_speed)
 	velocity.y = clamp(velocity.y, -jump_speed, jump_speed)
 	collision = move_and_collide(velocity*delta)
+

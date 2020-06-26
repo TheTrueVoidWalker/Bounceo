@@ -1,4 +1,6 @@
 6/25
+Pushed Verstion 0.0.4
+Misc. improvements.
 Pushed Version 0.0.3 beta 2
 Buffed enemy size.
 Pushed Version 0.0.3 beta 1
