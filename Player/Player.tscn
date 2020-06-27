@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Standard1.png" type="Texture" id=2]
 [ext_resource path="res://Player/Standard2.png" type="Texture" id=3]
+[ext_resource path="res://Player/PlayerCamera.gd" type="Script" id=4]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 15.0
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
@@ -21,7 +22,7 @@ animations = [ {
 } ]
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 144, 112 )
+position = Vector2( 336, 208 )
 z_index = 3
 collision_layer = 2
 collision_mask = 6
@@ -31,10 +32,10 @@ __meta__ = {
 }
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 frame = 1
 playing = true
 
@@ -50,6 +51,12 @@ drag_margin_h_enabled = true
 smoothing_enabled = true
 smoothing_speed = 3.0
 drag_margin_left = 0.1
+drag_margin_top = 0.75
 drag_margin_right = 0.1
+drag_margin_bottom = 0.1
 editor_draw_limits = true
+script = ExtResource( 4 )
+
+[node name="ShiftTween" type="Tween" parent="Camera"]
+[connection signal="updated_grounded" from="." to="Camera" method="_on_Player_updated_grounded"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

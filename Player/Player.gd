@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal updated_grounded(grounded)
+
 export (int) var max_run_speed = 300
 export (int) var jump_speed = 400
 export (float) var acceleration = 0.25
@@ -11,6 +13,8 @@ var velocity := Vector2()
 var collision : KinematicCollision2D
 
 var bounceLimited := 0.0
+var grounded := false
+var wasGrounded := false
 
 
 func _ready():
@@ -56,6 +60,8 @@ func _physics_process(delta):
 	#Handle flags
 	bounceLimited -= delta
 	bounceLimited = max(bounceLimited, 0)
+	wasGrounded = grounded
+	grounded = false
 	#Handle motion
 	get_input_acceleration()
 	velocity.y += gravity*delta
@@ -65,11 +71,15 @@ func _physics_process(delta):
 		if abs(collision.normal.angle_to(vertical)) < PI / 6:
 			#Bounced off of floor
 			velocity.y = -jump_speed
+			grounded = true
 		elif not abs(collision.normal.angle_to(vertical.rotated(PI))) < PI / 6:
 			#Bounced off of wall
 			bounceLimited = 0.1
 		if "Enemy" in collision.collider.name:
 			collided_with_enemy(collision)
+	#Update camera
+	if grounded != wasGrounded:
+		emit_signal("updated_grounded", grounded)
 	#Move
 	velocity.x = clamp(velocity.x, -2*max_run_speed, 2*max_run_speed)
 	velocity.y = clamp(velocity.y, -jump_speed, jump_speed)

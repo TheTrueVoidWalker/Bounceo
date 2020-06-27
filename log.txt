@@ -1,3 +1,11 @@
+Note: Camera size is 660px by 384px
+
+6/27
+Pushed Version 0.0.4 beta 2
+Updated camera.
+6/26
+Pushed Version 0.0.4 beta 1
+Added very basic background.
 6/25
 Pushed Verstion 0.0.4
 Misc. improvements.
