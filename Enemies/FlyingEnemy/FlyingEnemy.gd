@@ -8,17 +8,19 @@ func _ready():
 	max_jump_speed = 0
 	health = 1
 	velocity.x = move_speed
+	damage = 1
 	if not start_right:
 		velocity.x = -velocity.x
 
 func hurt():
 	.hurt()
 	set_collision_layer_bit(2, false)
-	$Sprite.play("Hurt")
-	$HurtByPlayerTimer.start()
+	$Animation.play("flash")
+	$ImmunityTimer.start()
 
-func _on_HurtByPlayerTimer_timeout():
-	$Sprite.play("default")
+func _on_ImmunityTimer_timeout():
+	$Animation.stop()
+	$Animation.play("default")
 	set_collision_layer_bit(2, true)
 
 func collide_with_player():

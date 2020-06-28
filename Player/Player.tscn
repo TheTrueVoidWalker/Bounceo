@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Standard1.png" type="Texture" id=2]
@@ -14,12 +14,67 @@ animations = [ {
 "loop": true,
 "name": "default",
 "speed": 2.0
-}, {
-"frames": [ ExtResource( 2 ), null, ExtResource( 3 ), null ],
-"loop": true,
-"name": "Hurt",
-"speed": 8.0
 } ]
+
+[sub_resource type="Animation" id=4]
+resource_name = "damage"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "flash"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 336, 208 )
@@ -36,11 +91,14 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
-[node name="DamageTimer" type="Timer" parent="."]
-wait_time = 2.0
+[node name="Animation" type="AnimationPlayer" parent="."]
+anims/damage = SubResource( 4 )
+anims/default = SubResource( 5 )
+anims/flash = SubResource( 3 )
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -59,4 +117,4 @@ script = ExtResource( 4 )
 
 [node name="ShiftTween" type="Tween" parent="Camera"]
 [connection signal="updated_grounded" from="." to="Camera" method="_on_Player_updated_grounded"]
-[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_InvulnerabilityTimer_timeout"]

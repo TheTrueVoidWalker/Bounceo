@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Enemies/FlyingEnemy/FlyingEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/FlyingEnemy/World1-1.png" type="Texture" id=2]
@@ -20,6 +20,50 @@ animations = [ {
 "speed": 20.0
 } ]
 
+[sub_resource type="Animation" id=3]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "flash"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
 [node name="FlyingEnemy" type="KinematicBody2D"]
 position = Vector2( 274.222, 241.26 )
 z_index = 2
@@ -37,9 +81,12 @@ shape = SubResource( 1 )
 position = Vector2( 2, 0 )
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
-[node name="HurtByPlayerTimer" type="Timer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="."]
+anims/default = SubResource( 3 )
+anims/flash = SubResource( 4 )
+
+[node name="ImmunityTimer" type="Timer" parent="."]
 one_shot = true
-[connection signal="timeout" from="HurtByPlayerTimer" to="." method="_on_HurtByPlayerTimer_timeout"]
+[connection signal="timeout" from="ImmunityTimer" to="." method="_on_ImmunityTimer_timeout"]
