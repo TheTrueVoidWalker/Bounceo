@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Standard1.png" type="Texture" id=2]
 [ext_resource path="res://Player/Standard2.png" type="Texture" id=3]
 [ext_resource path="res://Player/PlayerCamera.gd" type="Script" id=4]
+[ext_resource path="res://Player/Dead.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 15.0
@@ -76,6 +77,9 @@ tracks/0/keys = {
 "values": [ true, false, true ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "death"
+
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 336, 208 )
 z_index = 3
@@ -116,5 +120,15 @@ editor_draw_limits = true
 script = ExtResource( 4 )
 
 [node name="ShiftTween" type="Tween" parent="Camera"]
+
+[node name="OnDeath" type="Node2D" parent="."]
+pause_mode = 2
+visible = false
+
+[node name="Sprite" type="Sprite" parent="OnDeath"]
+texture = ExtResource( 5 )
+
+[node name="Animation" type="AnimationPlayer" parent="OnDeath"]
+anims/death = SubResource( 6 )
 [connection signal="updated_grounded" from="." to="Camera" method="_on_Player_updated_grounded"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_InvulnerabilityTimer_timeout"]

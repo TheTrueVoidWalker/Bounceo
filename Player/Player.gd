@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 signal updated_grounded(grounded)
+signal updated_health(health)
+signal dead()
 
 export (int) var maxRunSpeed = 10 * Globals.TILE_SIZE
 export (float) var jumpHeight = 4.20 * Globals.TILE_SIZE
@@ -55,11 +57,15 @@ func get_input_acceleration():
 		velocity.x = lerp(velocity.x, 0, airResistance)
 
 func dead():
-	pass
+	emit_signal("dead")
+	$Sprite.hide()
+	$OnDeath.visible = true
+	get_tree().paused = true
 
 func hurt(damage):
 	if $InvulnerabilityTimer.is_stopped():
 		health -= damage
+		emit_signal("updated_health", min(health,0))
 		if health <= 0:
 			dead()
 		set_collision_mask_bit(2, false)
