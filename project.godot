@@ -26,7 +26,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Globals="*res://Globals.gd"
+Globals="*res://Globals/Globals.gd"
+SceneChanger="*res://Globals/SceneChanger.tscn"
 
 [display]
 

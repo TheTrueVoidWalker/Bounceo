@@ -25,6 +25,8 @@ var grounded := false
 var wasGrounded := false
 
 func _ready():
+	#Unpause when loaded, for scene transition purposes
+	get_tree().paused = false
 	#Set up physics
 	gravity = 2*jumpHeight/pow(jumpDuration, 2)
 	jumpSpeed = sqrt(2*gravity*jumpHeight)
@@ -60,7 +62,12 @@ func dead():
 	emit_signal("dead")
 	$Sprite.hide()
 	$OnDeath.visible = true
+	$OnDeath/Animation.play("death")
 	get_tree().paused = true
+	yield($OnDeath/Animation, "animation_finished")
+	SceneChanger.change_scene("res://Levels/Debug Level.tscn")
+	yield(SceneChanger, "scene_changed")
+	
 
 func hurt(damage):
 	if $InvulnerabilityTimer.is_stopped():
@@ -73,7 +80,7 @@ func hurt(damage):
 		$Animation.queue("flash")
 		$InvulnerabilityTimer.start()
 
-func collided_with_enemy(collision):
+func collided_with_enemy():
 	#Determine if player damaged or enemy defeated
 	if velocity.y >= 0 or not abs(velocity.angle_to(global_position-collision.position)) < PI/3:
 		hurt(collision.collider.damage)
@@ -108,7 +115,7 @@ func _physics_process(delta):
 			#Bounced off of wall
 			bounceLimited = 0.1
 		if "Enemy" in collision.collider.name:
-			collided_with_enemy(collision)
+			collided_with_enemy()
 	#Update camera
 	if grounded != wasGrounded:
 		emit_signal("updated_grounded", grounded)

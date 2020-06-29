@@ -1,6 +1,8 @@
 Note: Camera size is 660px by 432px
 
 6/28
+Pushed Version 0.1.3
+Made death animation and handling. Added SceneChanger global.
 Pushed Version 0.1.2
 Added OnDeath container for death handling.
 Pushed Version 0.1.1

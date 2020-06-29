@@ -79,6 +79,19 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.25, 3 ),
+"transitions": PoolRealArray( 1, 1, 9.18959, 1.1487 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -64 ), Vector2( 0, 378 ) ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 336, 208 )
@@ -127,6 +140,7 @@ visible = false
 
 [node name="Sprite" type="Sprite" parent="OnDeath"]
 texture = ExtResource( 5 )
+offset = Vector2( 0, -43.9292 )
 
 [node name="Animation" type="AnimationPlayer" parent="OnDeath"]
 anims/death = SubResource( 6 )
