@@ -1,5 +1,12 @@
 Note: Camera size is 660px by 432px
 
+6/30
+Pushed Version 0.1.5
+Added player handling of goal.
+Added happy player sprite.
+Added Level Goal scene.
+Added blue Vortex sprites.
+Added lowHealth animation.
 6/29
 Pushed Version 0.1.4
 Effect now plays when losing or gaining hearts.

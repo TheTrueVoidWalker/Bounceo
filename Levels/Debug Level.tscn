@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Tilesets/Debug.tres" type="TileSet" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemies/FlyingEnemy/FlyingEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Warps/Level Goal.tscn" type="PackedScene" id=5]
 
 [node name="Debug Level" type="Node2D"]
 
@@ -32,6 +33,9 @@ move_speed = 50
 [node name="FlyingEnemy4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1280, -128 )
 move_speed = 200
+
+[node name="Level Goal" parent="." instance=ExtResource( 5 )]
+position = Vector2( 384, -256 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 2

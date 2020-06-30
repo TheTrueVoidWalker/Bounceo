@@ -18,7 +18,7 @@ var jumpSpeed : float
 var maxHealth : int
 var health : int
 
-var bounceLimited := 0.0
+var unControllable := 0.0
 var grounded := false
 var wasGrounded := false
 
@@ -48,18 +48,26 @@ func _ready():
 func get_input_acceleration():
 	var right = Input.is_action_pressed('ui_right')
 	var left = Input.is_action_pressed('ui_left')
-	if right and not left and not bounceLimited:
+	if right and not left and not unControllable:
 		if velocity.x >= 0:
 			velocity.x = lerp(velocity.x, maxRunSpeed, acceleration)
 		else:
 			velocity.x = lerp(velocity.x, maxRunSpeed, deacceleration)
-	if left and not right and not bounceLimited:
+	if left and not right and not unControllable:
 		if velocity.x <= 0:
 			velocity.x = lerp(velocity.x, -maxRunSpeed, acceleration)
 		else:
 			velocity.x = lerp(velocity.x, -maxRunSpeed, deacceleration)
 	if not (left or right) or (left and right):
 		velocity.x = lerp(velocity.x, 0, airResistance)
+
+func reached_goal():
+	unControllable = 5
+	velocity.x = 0
+	$Sprite.play("goal")
+	set_collision_mask_bit(3, false)
+	set_collision_mask_bit(2, false)
+	SceneChanger.change_scene("res://Levels/Debug Level.tscn", 3)
 
 func dead():
 	$Sprite.hide()
@@ -102,8 +110,8 @@ func update_max_health(newMaxHealth):
 
 func _physics_process(delta):
 	#Handle flags
-	bounceLimited -= delta
-	bounceLimited = max(bounceLimited, 0)
+	unControllable -= delta
+	unControllable = max(unControllable, 0)
 	wasGrounded = grounded
 	grounded = false
 	#Handle motion
@@ -118,7 +126,7 @@ func _physics_process(delta):
 			grounded = true
 		elif not abs(collision.normal.angle_to(vertical.rotated(PI))) <= PI / 4:
 			#Bounced off of wall
-			bounceLimited = 0.1
+			unControllable = 0.1
 		if "Enemy" in collision.collider.name:
 			collided_with_enemy()
 	#Update camera
@@ -126,6 +134,11 @@ func _physics_process(delta):
 		emit_signal("updated_grounded", grounded)
 	#Clamp health
 	health = clamp(health, 0, maxHealth)
+	#Update special animations
+	if health == 1 and ($Animation.current_animation == "default" or not $Animation.is_playing()):
+		$Animation.play("lowHealth")
+	elif health != 1 and $Animation.current_animation == "lowHealth":
+		$Animation.play("default")
 	#Move
 	velocity.x = clamp(velocity.x, -2*maxRunSpeed, 2*maxRunSpeed)
 	velocity.y = clamp(velocity.y, -2*jumpSpeed, 2*jumpSpeed)
