@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
 signal updated_grounded(grounded)
-signal updated_health(health)
-signal dead()
 
 export (int) var maxRunSpeed = 10 * Globals.TILE_SIZE
 export (float) var jumpHeight = 4.20 * Globals.TILE_SIZE
@@ -12,12 +10,12 @@ export (float) var deacceleration = 0.05
 export (float) var airResistance = 0.035
 export (Vector2) var vertical = Vector2(0,-1)
 export (float) var gravityMultiplier = 1.0
-export (int) var maxHealth = 5
 
 var velocity := Vector2()
 var collision : KinematicCollision2D
 var gravity : float
 var jumpSpeed : float
+var maxHealth : int
 var health : int
 
 var bounceLimited := 0.0
@@ -40,7 +38,12 @@ func _ready():
 	$Camera.limit_top = used_rect.position.y*cell_size.x
 	$Camera.limit_bottom = used_rect.end.y*cell_size.x
 	#Set up health
-	health = maxHealth
+	PlayerStats.update_health(PlayerStats.maxHealth)
+	maxHealth = PlayerStats.maxHealth
+	health = PlayerStats.health
+	PlayerStats.connect("updated_health", self, "update_health")
+	PlayerStats.connect("updated_max_health", self, "update_max_health")
+	PlayerStats.connect("out_of_health", self, "dead")
 
 func get_input_acceleration():
 	var right = Input.is_action_pressed('ui_right')
@@ -59,22 +62,17 @@ func get_input_acceleration():
 		velocity.x = lerp(velocity.x, 0, airResistance)
 
 func dead():
-	emit_signal("dead")
 	$Sprite.hide()
 	$OnDeath.visible = true
 	$OnDeath/Animation.play("death")
 	get_tree().paused = true
 	yield($OnDeath/Animation, "animation_finished")
 	SceneChanger.change_scene("res://Levels/Debug Level.tscn")
-	yield(SceneChanger, "scene_changed")
 	
 
 func hurt(damage):
 	if $InvulnerabilityTimer.is_stopped():
-		health -= damage
-		emit_signal("updated_health", min(health,0))
-		if health <= 0:
-			dead()
+		PlayerStats.update_health(max(health-damage,0))
 		set_collision_mask_bit(2, false)
 		$Animation.play("damage")
 		$Animation.queue("flash")
@@ -94,6 +92,13 @@ func _on_InvulnerabilityTimer_timeout():
 		set_collision_mask_bit(2, true)
 		$Animation.stop()
 		$Animation.play("default")
+
+func update_health(newHealth):
+	health = newHealth
+
+func update_max_health(newMaxHealth):
+	maxHealth = newMaxHealth
+	health = clamp(health, 0, maxHealth)
 
 func _physics_process(delta):
 	#Handle flags

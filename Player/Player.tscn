@@ -17,7 +17,7 @@ animations = [ {
 "speed": 2.0
 } ]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "damage"
 length = 0.1
 tracks/0/type = "value"
@@ -33,7 +33,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "default"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
@@ -60,8 +60,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "flash"
+[sub_resource type="Animation" id=5]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -82,13 +81,13 @@ resource_name = "death"
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:offset")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 1.25, 3 ),
-"transitions": PoolRealArray( 1, 1, 9.18959, 1.1487 ),
+"transitions": PoolRealArray( 1, 1, 0.15932, 0.297302 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -64 ), Vector2( 0, 378 ) ]
 }
@@ -111,9 +110,9 @@ frames = SubResource( 2 )
 playing = true
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-anims/damage = SubResource( 4 )
-anims/default = SubResource( 5 )
-anims/flash = SubResource( 3 )
+anims/damage = SubResource( 3 )
+anims/default = SubResource( 4 )
+anims/flash = SubResource( 5 )
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
 one_shot = true
@@ -140,7 +139,6 @@ visible = false
 
 [node name="Sprite" type="Sprite" parent="OnDeath"]
 texture = ExtResource( 5 )
-offset = Vector2( 0, -43.9292 )
 
 [node name="Animation" type="AnimationPlayer" parent="OnDeath"]
 anims/death = SubResource( 6 )

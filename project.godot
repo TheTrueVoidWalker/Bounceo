@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 
 Globals="*res://Globals/Globals.gd"
 SceneChanger="*res://Globals/SceneChanger.tscn"
+PlayerStats="*res://Globals/PlayerStats.gd"
 
 [display]
 
