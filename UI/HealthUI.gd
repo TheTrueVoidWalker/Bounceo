@@ -16,8 +16,8 @@ func set_hearts(amount):
 	if hearts <= pHearts:
 		$Full.rect_size.x = hearts*textureSize.x
 		for i in range(hearts, pHearts):
-			effect.position = Vector2((0.5+i)*textureSize.x, 0.5*textureSize.y)
 			effect = breakingEffect.instance()
+			effect.position = Vector2((0.5+i)*textureSize.x, 0.5*textureSize.y)
 			add_child(effect, true)
 	else:
 		for i in range(pHearts, hearts):
