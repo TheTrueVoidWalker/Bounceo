@@ -8,6 +8,6 @@ func _ready():
 func _on_Sprite_animation_finished():
 	$Animation.play("fade")
 
-func _on_Animation_animation_finished(anim_name):
+func _on_Animation_animation_finished(_anim_name):
 	emit_signal("done")
 	queue_free()

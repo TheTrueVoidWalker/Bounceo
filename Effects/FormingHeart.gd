@@ -9,6 +9,6 @@ func _on_Sprite_animation_finished():
 	emit_signal("done")
 	queue_free()
 
-func _on_Animation_animation_finished(anim_name):
+func _on_Animation_animation_finished(_anim_name):
 	$Sprite.play("default")
 	

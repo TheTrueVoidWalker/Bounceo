@@ -1,5 +1,8 @@
 Note: Camera size is 660px by 432px
 
+7/1
+Pushed Version 0.2.0
+Added (really bad) title screen.
 6/30
 Pushed Version 0.1.5
 Added player handling of goal.

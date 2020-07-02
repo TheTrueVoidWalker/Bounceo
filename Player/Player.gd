@@ -65,9 +65,11 @@ func reached_goal():
 	unControllable = 5
 	velocity.x = 0
 	$Sprite.play("goal")
+	PlayerStats.update_health(PlayerStats.maxHealth)
+	$Animation.play("default")
 	set_collision_mask_bit(3, false)
 	set_collision_mask_bit(2, false)
-	SceneChanger.change_scene("res://Levels/Debug Level.tscn", 3)
+	SceneChanger.change_scene("res://Menus/Title Screen.tscn", 3)
 
 func dead():
 	$Sprite.hide()
@@ -75,7 +77,7 @@ func dead():
 	$OnDeath/Animation.play("death")
 	get_tree().paused = true
 	yield($OnDeath/Animation, "animation_finished")
-	SceneChanger.change_scene("res://Levels/Debug Level.tscn")
+	SceneChanger.change_scene("res://Menus/Title Screen.tscn")
 	
 
 func hurt(damage):
@@ -135,7 +137,7 @@ func _physics_process(delta):
 	#Clamp health
 	health = clamp(health, 0, maxHealth)
 	#Update special animations
-	if health == 1 and ($Animation.current_animation == "default" or not $Animation.is_playing()):
+	if health == 1 and not $Animation.is_playing():
 		$Animation.play("lowHealth")
 	elif health != 1 and $Animation.current_animation == "lowHealth":
 		$Animation.play("default")
