@@ -1,5 +1,8 @@
 Note: Camera size is 660px by 432px
 
+7/3
+Pushed Version 0.2.1
+Added static layer of background.
 7/1
 Pushed Version 0.2.0
 Added (really bad) title screen.

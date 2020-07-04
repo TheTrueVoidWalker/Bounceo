@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ground.png-8556ae6c1ad8a2b93719d77282c91c44.stex"
+path="res://.import/Blue Sky Scaled.png-5fc88ee4a3b005b2838f6eaab3cbee6a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Backgrounds/Daytime Sky/Ground.png"
-dest_files=[ "res://.import/Ground.png-8556ae6c1ad8a2b93719d77282c91c44.stex" ]
+source_file="res://Backgrounds/Blue Sky Scaled.png"
+dest_files=[ "res://.import/Blue Sky Scaled.png-5fc88ee4a3b005b2838f6eaab3cbee6a.stex" ]
 
 [params]
 
